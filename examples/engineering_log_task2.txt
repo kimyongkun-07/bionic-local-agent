@@ -1,0 +1,23 @@
+工程日志 - 任务2
+日期：2026-10-03
+项目：Bionic Local Agent
+环境：Windows，Python3.14，Bionic，端口1234
+
+任务目标：
+完成任务2，使用Python实现可记忆上下文的多轮对话，调用本地部署Qwen2.5-7B模型。
+
+工作过程：
+1. Bionic加载Qwen2.5 7B Instruct，开启本地API服务。
+2. 编写task2_chat.py，使用openai库访问localhost:1234。
+3. 安装依赖：pip install openai。
+4. 调试问题：
+① CMD找不到py文件 → 切换CMD工作目录到仓库文件夹解决
+② ModuleNotFoundError，缺少openai模块 → 执行pip安装
+5. 先运行task1.py单次问答代码，确认接口连通。
+6. 编写while循环+messages列表保存对话历史，实现多轮对话，输入exit退出程序。
+
+实验结果：
+任务2完成。Python程序成功访问本地大模型，支持连续对话，模型可以记住上下文。
+
+小结：
+调用本地API需要配置base_url；messages列表保存对话记录，实现上下文记忆；CMD运行脚本要注意文件路径。

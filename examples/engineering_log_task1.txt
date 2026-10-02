@@ -1,0 +1,21 @@
+工程日志 - 任务1
+日期：2026-10-03
+项目：Bionic Local Agent
+环境：Windows，Python3.14，Bionic本地大模型服务，Qwen2.5-7B Instruct
+
+任务目标：
+搭建本地大模型运行环境，在Bionic中加载Qwen2.5-7B模型并开启OpenAI兼容本地API服务，验证本地接口可正常访问。
+
+工作过程：
+1. 打开Bionic客户端，导入Qwen2.5-7B Instruct模型权重并加载模型实例。
+2. 在Bionic设置中开启本地API服务，监听地址为 localhost:1234/v1。
+3. 编写基础单次调用Python脚本，使用openai库访问本地API。
+4. 安装Python依赖包 openai，解决ModuleNotFoundError报错。
+5. 调试代码，修正base_url、model名称等参数。
+6. 运行脚本，成功获取模型返回文本，验证本地API通路正常。
+
+实验结果：
+任务1完成。Bionic本地模型服务成功启动，Python脚本可以成功调用本地Qwen大模型，接口连通性验证通过。
+
+小结：
+Bionic提供兼容OpenAI协议的本地API；调用本地模型不需要真实api_key，使用占位符即可；base_url必须填写本地服务地址。
