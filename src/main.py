@@ -1,8 +1,13 @@
+import os
 from utils import load_config
 
 def main():
-    # 加载配置文件
-    config = load_config("../config/config.yaml")
+    # 获取当前main.py文件所在目录
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    # 拼接配置文件完整路径
+    config_path = os.path.join(base_dir, "../config/config.yaml")
+    config = load_config(config_path)
+
     print("===== Bionic Local Agent 本地对话程序 =====")
     print(f"模型温度：{config['model']['temperature']}")
     print("输入问题进行对话，输入 exit 退出程序\n")
@@ -18,3 +23,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
