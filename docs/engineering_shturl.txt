@@ -1,0 +1,33 @@
+# 工程日志：Bionic Local Agent
+项目：本地大模型命令行对话程序
+仓库地址：https://github.com/kimyongkun-07/bionic-local-agent.git
+
+## 2026-10-02 任务一：搭建项目基础工程框架
+### 完成内容
+1. 初始化Git仓库，创建.gitignore，搭建标准工程目录
+    - config：存放模型yaml配置
+    - src：源代码（main.py主程序、utils.py工具函数）
+    - docs：项目文档、部署说明、演示截图、工程日志
+    - examples：测试提示词样例
+2. 编写代码
+    - utils.py：封装load_config函数，读取yaml配置文件
+    - main.py：命令行对话交互循环，加载配置；修复相对路径读取配置文件的bug
+3. 文档编写
+    - README.md：项目简介与功能
+    - setup.md：项目部署说明
+    - demo_screenshot.md：程序运行演示示例
+    - test_prompt.txt：准备测试提问样例
+4. 版本管理：每完成一个文件，执行git add / commit / push，同步到GitHub远程仓库
+
+### 遇到的问题与解决
+问题：运行main.py时抛出FileNotFoundError，找不到config.yaml配置文件。
+原因：直接使用相对路径`../config/config.yaml`，在不同工作目录运行容易出错。
+解决方案：使用os读取当前脚本绝对路径，再拼接配置文件路径，保证程序位置无关。
+
+### 当前项目状态
+基础工程框架完成
+程序可以正常启动，开启控制台对话交互
+目前回答为占位文本，尚未接入Bionic本地模型（任务二待实现）
+
+### 下一步计划
+任务二：接入Bionic本地模型，替换占位回答，实现真实大模型生成对话。
