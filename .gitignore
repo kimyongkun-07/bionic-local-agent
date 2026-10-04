@@ -7,4 +7,7 @@ __pycache__/
 # 环境文件夹
 venv/
 .venv/
+# YOLO 模型与运行缓存
+*.pt
+runs/
 
