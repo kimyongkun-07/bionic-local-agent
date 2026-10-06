@@ -35,9 +35,6 @@ pip install requests ultralytics
 # 启动CLI编程助教
 python main.py
 前置条件：打开 LM Studio，加载 Bionic 模型，开启本地 API 服务器
-
-### 第5段
-```markdown
 ## 任务清单
 - [x] Task1：搭建本地大模型环境，基础对话
 - [x] Task2：Python调用本地模型API，实现对话
