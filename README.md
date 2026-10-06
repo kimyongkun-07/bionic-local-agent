@@ -29,7 +29,7 @@ bionic-local-agent/
 ├── .gitignore
 └── README.md
 ## 环境依赖
-```bash
+bash
 pip install requests ultralytics
 启动方式
 # 启动CLI编程助教
