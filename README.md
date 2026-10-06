@@ -31,3 +31,23 @@ bionic-local-agent/
 ## 环境依赖
 ```bash
 pip install requests ultralytics
+启动方式
+# 启动CLI编程助教
+python main.py
+前置条件：打开 LM Studio，加载 Bionic 模型，开启本地 API 服务器
+
+### 第5段
+```markdown
+## 任务清单
+- [x] Task1：搭建本地大模型环境，基础对话
+- [x] Task2：Python调用本地模型API，实现对话
+- [x] Task3：流式输出对话
+- [x] Task4：YOLOv8目标检测推理
+- [x] Task5：项目重构，前后端分离CLI编程助教
+
+## 工程日志
+- engineering_log_task1.txt
+- engineering_log_task2.txt
+- engineering_log_task3.txt
+- engineering_log_task4.txt
+- engineering_log_task5.txt
