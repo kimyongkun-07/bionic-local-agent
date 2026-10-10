@@ -1,37 +1,65 @@
-from planner import HarnessPlanner
-from tools.code_analyze import code_analyze
-from tools.gen_exercise import gen_exercise
-from tools.summary_note import summary_note
+from llm_client import local_llm_call
+from tools import gen_exercise
 
 def main():
-    planner = HarnessPlanner()
-    print("===== Harness编程学习助教智能体（Pi Agent架构） =====")
-    goal = input("请输入你的编程学习目标：")
-    collect_data = []
+    print("===== Harness 编程助教智能体 =====")
+    user_query = input("请输入你的学习需求：")
 
-    while True:
-        action = planner.think(goal)
-        print(f"\n【Harness调度思考】{action}")
-        act_name = action["next_action"]
-        act_param = action["action_input"]
+    max_tool_calls = 3
+    call_count = 0
+    history = []
 
-        if act_name == "finish":
-            print(" 学习任务完成，正在生成学习笔记！")
-            note = summary_note(collect_data)
-            print("\n=====学习笔记=====")
-            print(note)
+    system_prompt = """
+你是编程学习调度智能体。根据用户需求选择工具，只输出JSON，不要多余文字。
+可选工具：
+1. gen_exercise：生成练习题，参数 language、topic
+任务终止条件：达到最大调用次数，或者需求完成输出 {"action":"finish"}
+"""
+    while call_count < max_tool_calls:
+        # 拼接系统提示词 + 用户和历史对话
+        prompt = f"{system_prompt}\n用户需求：{user_query}\n历史记录：{history}"
+        resp = local_llm_call(prompt)
+        print(f"\n【Harness调度思考】{resp}")
+
+        import json
+        try:
+            data = json.loads(resp)
+        except Exception as e:
+            print("模型输出解析失败，结束任务")
             break
-        elif act_name == "code_analyze":
-            res = code_analyze(act_param)
-            collect_data.append({"type":"代码分析","content":res["analysis"]})
-            planner.record_completed(f"已完成代码分析任务，输入代码：{act_param[:30]}...")
-        elif act_name == "gen_exercise":
-            res = gen_exercise(act_param)
-            collect_data.append({"type":"编程习题","content":res["exercise"]})
-            planner.record_completed(f"已生成{act_param}的编程练习题")
+
+        next_action = data.get("action")
+        action_input = data.get("params", {})
+
+        if next_action == "finish":
+            print("任务完成，准备生成笔记")
+            break
+        elif next_action == "gen_exercise":
+            res = gen_exercise(action_input)
+            history.append({"action": next_action, "params": action_input, "result": res})
+            call_count += 1
+            print(f"工具调用成功，次数：{call_count}/{max_tool_calls}")
         else:
-            print("未知工具，任务终止")
+            print("未知动作，退出调度")
             break
+
+    # 生成学习笔记
+    print("\n达到最大工具调用次数，任务结束，生成学习笔记")
+    print("\n=====学习笔记=====")
+    if len(history) > 0:
+        last_input = history[-1]["params"]
+        lang = last_input["language"]
+        topic = last_input["topic"]
+        note_prompt = f"""
+请根据知识点：{topic}，编程语言：{lang}
+写一份学习笔记，包含两点：
+1.知识点简要讲解
+2.一道编程练习题，含题目、输入输出、参考答案
+"""
+        note = local_llm_call(note_prompt)
+        print(note)
+    else:
+        print("本次没有调用工具")
 
 if __name__ == "__main__":
     main()

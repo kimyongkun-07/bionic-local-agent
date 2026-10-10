@@ -23,6 +23,8 @@ class HarnessPlanner:
     "reason": "简短说明选择动作的原因"
 }}
 信息足够完成用户目标时，next_action填finish。
+你需要查看【已经完成的任务记录】，已经执行过的工具，不允许再次选择。
+当已经完成用户全部需求，next_action 必须输出finish，不要再继续调用工具，禁止重复调用同一个工具。
 """
         resp = local_llm_call(prompt)
         return json.loads(resp)
